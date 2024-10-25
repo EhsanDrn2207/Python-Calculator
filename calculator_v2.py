@@ -1,10 +1,12 @@
 import tkinter as tk
 import random
+import termcolor
 
 #creating GUI
 root = tk.Tk()
 root.title("Esd calculator")
 root.iconbitmap('image/calculator.ico')
+root.resizable(False, False)
 
 #creating lable for showing result of caculation
 lbl_result = tk.Label(
@@ -43,7 +45,7 @@ def attach_numbers(btn_text):
             elif current[-1] in operation:
                 numbers -= 1
         except IndexError:
-            pass
+            print(termcolor.colored("IndextError occurd.", color='red', attrs=['bold']))
 
         lbl_result['text'] = current[:-1] #modify lebal
         
@@ -55,9 +57,12 @@ def attach_numbers(btn_text):
             lbl_result['text'] = str(eval(current)) #Evaluation
             numbers, point = 1, 0
             
-        except SyntaxError:
-            pass
-            
+        except SyntaxError as error:
+            print(termcolor.colored("Syntex occurd.", color='red', attrs=['bold']))
+        
+        except ZeroDivisionError as error:
+            print(termcolor.colored("ZeroDivisionError occurd.", color='red', attrs=['bold']))
+
     elif btn_text == '.': # 2.5.54 , ..23, 23.23... invalid
         for i in current:
             if i in operation:
